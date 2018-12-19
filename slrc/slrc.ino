@@ -100,7 +100,6 @@ void loop() {
   }else if(irLSignal == HIGH && irLMSignal == HIGH && irRSignal == LOW && irRMSignal == LOW){
     //only right -> turn right by 90
     turn(0,90);
-
   //line following
   }else if(irLSignal == HIGH && irLMSignal == LOW && irRSignal == LOW && irRMSignal == HIGH){
     //if middle two on the track -> go foward
@@ -165,7 +164,6 @@ void turn(int side,int angle){
 }
 
 //sonar methods
-
 long microsecondsToInches(long microseconds)
 {
   return microseconds / 74 / 2;
@@ -189,6 +187,7 @@ int distance(int trig,int echo){
   digitalWrite(trig, LOW);
 
   pinMode(echo, INPUT);
+ 
   duration = pulseIn(echo, HIGH);
 
   cm = microsecondsToCentimeters(duration); 
@@ -197,7 +196,6 @@ int distance(int trig,int echo){
 }
 
 //servo code
-
 void servoTurn(int a){
   for(angle = 0; angle < a; angle += 1){                                  
     servo_test.write(angle);                          
@@ -214,11 +212,10 @@ void colour(){
   frequency = map(frequency, 95,300,255,0);
   int frequencyR = frequency ;
   // Printing the value on the serial monitor
-
-//  Serial.print("R= ");//printing name
-//  Serial.print(frequency);//printing RED color frequency
-//  Serial.print("  ");
-delay(100);
+  // Serial.print("R= ");//printing name
+  // Serial.print(frequency);//printing RED color frequency
+  // Serial.print("  ");
+  delay(100);
   // Setting Green filtered photodiodes to be read
   digitalWrite(S2,HIGH);
   digitalWrite(S3,HIGH);
@@ -228,9 +225,9 @@ delay(100);
   frequency = map(frequency, 100,400,255,0);
   int frequencyG = frequency ;
   // Printing the value on the serial monitor
-//  Serial.print("G= ");//printing name
-//  Serial.print(frequency);//printing RED color frequency
-//  Serial.print("  ");
+  // Serial.print("G= ");//printing name
+  // Serial.print(frequency);//printing RED color frequency
+  // Serial.print("  ");
   delay(100);
   // Setting Blue filtered photodiodes to be read
   digitalWrite(S2,LOW);
@@ -243,75 +240,34 @@ delay(100);
   int frequencyB = frequency ;
 
   // Printing the value on the serial monitor
-//  Serial.print("B= ");//printing name
-//  Serial.print(frequency);//printing RED color frequency
-//  Serial.println("  ");
+  // Serial.print("B= ");//printing name
+  // Serial.print(frequency);//printing RED color frequency
+  // Serial.println("  ");
   delay(100);
 
-
-
-if(frequencyB > 50 || frequencyG > 50 || frequencyR > 50){
-
-
-
-     if (frequencyB >= frequencyG)
-    {
-        if(frequencyB >= frequencyR){
-
-           
- 
- 
-           // Serial.println(state);
-            BTserial.println(3);
-            Serial.println("BLUE");
-            //Serial.println("  ");
-
-        }
-        else{
-
+  if(frequencyB > 50 || frequencyG > 50 || frequencyR > 50){
+       if (frequencyB >= frequencyG){
+          if(frequencyB >= frequencyR){           
+             BTserial.println(3);
+             Serial.println("BLUE");           
+          }else{
              BTserial.println(1);
-           Serial.println("RED");
-           //Serial.println("  ");
-
-          
-
-        }
-    }
-    
-    else
-    {
-        if(frequencyG >= frequencyR){
-
-            BTserial.println(2);
-            Serial.println("GREEN");
-            //Serial.println("  ");
-
-        }
-        else{
-            BTserial.println(1);
-            Serial.println("RED");
-            //Serial.println("  ");
-
-        }
-    }
-}else{
-
-
-  BTserial.println("Not Define"); 
-  Serial.println("Not Define");
-  //Serial.println("  ");
-
-  
-
-
-  // Serial.println(state);
-  
-  
+             Serial.println("RED");
+          }
+       }else{
+          if(frequencyG >= frequencyR){
+              BTserial.println(2);
+              Serial.println("GREEN");           
+          }else{
+              BTserial.println(1);
+              Serial.println("RED");            
+          }
+      }
+  }else{
+    BTserial.println("Not Define"); 
+    Serial.println("Not Define");
   }
 
-
-
-    delay(100);
+  delay(100);
+ 
 }
-
-//end
